@@ -10,4 +10,15 @@
 
 - Load balancing: employs internal/external load balancing for routing netwrok traffic.
 
+### Components of Control node
 
+- API SERVER
+- Scheduler
+- Controller Manager
+- Etcd
+
+### Components of Node componets
+
+- Kubelet
+- Kube Proxy
+- Container Runtime
