@@ -22,3 +22,15 @@
 - Kubelet
 - Kube Proxy
 - Container Runtime
+
+
+### Advantages
+
+- Portability
+
+- Scalability
+
+- API-Based
+
+- Extensibility
+
