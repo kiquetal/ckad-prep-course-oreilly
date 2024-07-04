@@ -6,7 +6,7 @@
 
 - Persistent Volumes preserve data beyond the lifespan of a Pod. They are a good option for applications that require data to exist longer
 
-- Define the Volume type with spec.volumes[] and the reference it in a container with spec.containers[].volume.volumeMounts
+- Define the Volume type with spec.volumes[] and the reference it in a container with spec.containers[].volumeMounts
 
 
 ### Volume Types
