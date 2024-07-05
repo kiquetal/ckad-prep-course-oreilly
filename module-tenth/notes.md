@@ -17,3 +17,23 @@ Updates to the replica configuration
 
 - Both autoscalers use the metrics server.(Every pode should also set resource requests and limits)
 
+
+#### 
+
+kubectl rollout undo --to-revision=1 deployemnt nginx
+
+kubectl rollout history --to-revision=2 deployments nginx
+
+
+#### Common deployments strategies
+
+- Ramped: Release a new version on a rolloing update fashion,one after the other.
+
+
+- Recreate: Terminate the old version and release the new one
+
+
+- Blue/green: Release a new version alongside the old version then switch traffic
+
+
+- Canary: Release a new version to a subset of users
