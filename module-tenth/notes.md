@@ -37,3 +37,25 @@ kubectl rollout history --to-revision=2 deployments nginx
 
 
 - Canary: Release a new version to a subset of users
+
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+(SECONDARY replicaset is created with a new version of application(
+
+
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+
+terminate all the running instances
+
+
+blue/greend canary need 2 deployments
+
+
