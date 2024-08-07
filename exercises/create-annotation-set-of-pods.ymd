@@ -1,0 +1,3 @@
+### Using the kubectl
+
+k annotate pods http-server "deployer=John Doe" --overwrite
