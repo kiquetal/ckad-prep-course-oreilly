@@ -40,3 +40,40 @@ helm install <release> bitnami/apache --set repliceCount=2 -n mercury
 
 
 Team Neptune has its own ServiceAccount named neptune-sa-v2 in Namespace neptune. A coworker needs the token from the Secret that belongs to that ServiceAccount. Write the base64 decoded token to file /opt/course/5/token on ckad7326.
+
+
+
+### Create a single Pod named pod6 in Namespace default of image busybox:1.31.0. The Pod should have a readiness-probe executing cat /tmp/ready. It should initially wait 5 and periodically wait 10 seconds. This will set the container ready only if the file /tmp/ready exists.
+
+The Pod should run the command touch /tmp/ready && sleep 1d, which will create the necessary file to be ready and then idles. Create the Pod and confirm it starts.
+
+kubectl run pod6 --image busybox:1.31.0 --dry-run=client -o yaml -- /bin/sh -c "touch /tmp/ready && sleep 1d" > podq6.yaml
+
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod6
+  name: pod6
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c 
+    - touch /tmp/ready && sleep 1d
+    image: busybox:1.31.0
+    name: pod6
+    readinessProbe:
+      exec: 
+        command: 
+        - /bin/sh
+        - -c
+        - cat /tmp/ready
+      initialDelaySeconds: 5
+      periodSeconds: 10
+  restartPolicy: Never
+
+```
+
