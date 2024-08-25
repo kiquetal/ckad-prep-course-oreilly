@@ -13,3 +13,13 @@ kubectl describe role read-only
 ### Creating role binding
 
 kubectl create rolebinding read-only-binding --role=read-only --user=bmushcko
+
+
+### Show current context
+
+kubectl config current-context
+
+
+### Show the contexts
+
+kubectl config get-contexts
