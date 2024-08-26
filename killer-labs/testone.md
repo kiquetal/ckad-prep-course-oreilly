@@ -83,3 +83,43 @@ Finally use for example curl from a temporary nginx:alpine Pod to get the respon
 
 
 kubectl expose pod project- plt-6cc-api  --name project-plt-6cc-svc -n pluto --port 3333 --target-port 80
+
+
+#### Create sidecontainer
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+	name: test-init-container
+	namespace: mars
+spec:
+	replicas: 1
+	selector:
+		matchLabels:
+			id: test-init-container
+	template:
+		metadata:
+			labels:
+				id: test-init-container
+		spec:
+			volumes:
+			- name: web-content
+				emptyDir: {}
+			initContainers:
+			- name: init-cron
+				image: busybox:1.31.0
+				command: ["sh","-c",'echo "check this out" > /tmp/web-content/index.html']
+				volumeMounts:
+				- name:	web-content
+					mountPath: /tmp/web-content
+			containers:
+			- image: nginx:1.17.3-alpine
+				name: nginx
+				volumeMounts:
+				- name: web-content
+					mountPath: /usr/share/nginx/html
+				ports:
+				- name: http-port
+					containerPort: 80
+```
