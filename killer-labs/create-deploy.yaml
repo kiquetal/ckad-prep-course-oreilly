@@ -5,7 +5,7 @@ metadata:
   labels:
     app: sunny
   name: sunny
-  namespace: sunny
+  namespace: sunny 
 spec:
   replicas: 4
   selector:
