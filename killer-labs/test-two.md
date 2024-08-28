@@ -150,4 +150,95 @@ This way it can be picked up by kubectl logs.
 
 Check if the logs of the new container reveal something about the missing data incidents.
 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cleaner
+  namespace: mercury
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      id: cleaner
+  template:
+    metadata:
+      labels:
+        id: cleaner
+    spec:
+      volumes: 
+      - name: logs
+        emptyDir: {}
+      initContainers:
+      - name: init
+ 	image: bash:5.0.11
+        command: ['bash','-c','echo init > /var/log/cleaner/cleaner.log']
+	volumeMounts:
+        - name: logs
+          mountPath: /var/log/cleaner
+      - name: logger-con
+        image: busybox:1.31.0
+        restartPolicy: Always
+        command:['sh','-c',"tail -f /var/log/cleaner/cleaner.log"]
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log/cleaner
+      containers:
+      - name: cleaner-con
+        image: bash:5.0.11
+        command: ['bash','-c','while true; do echo `date`: "remove random file " >> /var/log/cleaner/cleaner.log; sleep 1; done']
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log/cleaner
+```
+
+### Question 15
+Team Moonpie has a nginx server Deployment called web-moon in Namespace moon. 
+Someone started configuring it but it was never completed. 
+To complete please create a ConfigMap called configmap-web-moon-html containing the content of file /opt/course/15/web-moon.html under the data key-name index.html.
+
+The Deployment web-moon is already configured to work with this ConfigMap and serve its content. 
+Test the nginx configuration for example using curl from a temporary nginx:alpine Pod.
+
+kubectl create configmap configmap-web-moon-html --from-file=index.html=/opt/course/15/web-moon.html 
+
+kubectl run temp --image=nginx:alpine --rm -- wget -O- deploy.ment
+
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-moon
+  namespace: moon
+  labels:
+    id: deployment
+````
+
+### Question 14
+
+
+You need to make changes on an existing Pod in Namespace moon called secret-handler. Create a new Secret secret1 which contains user=test and pass=pwd. The Secret's content should be available in Pod secret-handler as environment variables SECRET1_USER and SECRET1_PASS. The yaml for Pod secret-handler is available at /opt/course/14/secret-handler.yaml.
+
+There is existing yaml for another Secret at /opt/course/14/secret2.yaml, create this Secret and mount it inside the same Pod at /tmp/secret2. Your changes should be saved under /opt/course/14/secret-handler-new.yaml on ckad9043. Both Secrets should only be available in Namespace moon.
+
+
+### Question 13
+
+
+Team Moonpie, which has the Namespace moon, needs more storage. Create a new PersistentVolumeClaim named moon-pvc-126 in that namespace. This claim should use a new StorageClass moon-retain with the provisioner set to moon-retainer and the reclaimPolicy set to Retain. The claim should request storage of 3Gi, an accessMode of ReadWriteOnce and should use the new StorageClass.
+
+The provisioner moon-retainer will be created by another team, so it's expected that the PVC will not boot yet. Confirm this by writing the event message from the PVC into file /opt/course/13/pvc-126-reason on ckad9043.
+
+
+### Question 12
+
+
+
+
+### Question 11
+
+
+
+### Question 10
 
